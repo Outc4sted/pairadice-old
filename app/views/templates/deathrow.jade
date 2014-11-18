@@ -1,0 +1,9 @@
+.row.death-row
+    .dice.col-xs-1
+        span(ng-if="dice.num", ng-bind="dice.num")
+        .glyphicon.glyphicon-remove(ng-if="!dice.num")
+
+    .col-xs-11
+        ul.list-inline
+            li(ng-repeat="notch in dice.notches track by $index")
+                .notch(ng-class="notch ? 'bg-danger' : 'bg-warning'")

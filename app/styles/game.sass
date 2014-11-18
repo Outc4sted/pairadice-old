@@ -1,0 +1,210 @@
+@import "compass"
+@mixin notchSize($num)
+    @if $num == 2
+        width: 90px
+    @else if $num == 3
+        width: 80px
+    @else if $num == 4
+        width: 60px
+    @else if $num == 5
+        width: 50px
+    @else if $num == 6
+        width: 35px
+    @else if $num == 0
+        width: 30px
+    @else
+        width: 23px
+
+#pairadice
+    .notch
+        height: 40px
+        border: 1px solid
+
+#overview
+    font-size: 2em
+    margin-bottom: 5px
+
+    .col-xs-2, .col-xs-3
+        padding: 0
+
+    .points
+        text-align: right
+
+    .pairs
+        text-align: center
+        font-weight: bold
+        color: #FFF
+
+        &.pair1
+            background-color: #DA825F
+
+        &.pair2
+            background-color: #4ECDC4
+
+#death-board
+    position: relative
+
+    .notch
+        height: 40px
+        width: 66px
+        margin-left: 11px
+
+    .dice
+        height: 40px
+        width:  40px
+        border: 2px solid
+        position: relative
+        margin: 0 10px
+
+        span
+            top: 25%
+            left: 40%
+            position: absolute
+
+        .glyphicon
+            top: 29%
+            left: 28%
+            position: absolute
+
+    .panel-default
+        padding-top: 15px
+
+    .panel-body
+        padding: 0 15px
+
+    .glyphicon-remove
+        border: 1px solid
+
+    .death-row
+        li
+            padding-right: 0
+            padding-left: 6px
+
+        .col-xs-11
+            padding: 0
+
+#game-dice
+    .col-xs-12
+        padding: 0
+
+    .dice
+        height: 130px
+        width:  130px
+        margin-left: 19px
+        position: relative
+        cursor: pointer
+        -webkit-border-radius: 10px 10px 10px 10px
+        -moz-border-radius:    10px 10px 10px 10px
+        border-radius:         10px 10px 10px 10px
+        border: 4px solid #000
+
+        &.pair1
+            -webkit-box-shadow: inset -7px -7px 12px 0px rgba(218, 130, 95, 0.75) // #DA825F
+            -moz-box-shadow:    inset -7px -7px 12px 0px rgba(218, 130, 95, 0.75)
+            box-shadow:         inset -7px -7px 12px 0px rgba(218, 130, 95, 0.75)
+
+        &.pair2
+            -webkit-box-shadow: inset -7px -7px 12px 0px rgba(78, 205, 196, 0.75) // #4ECDC4
+            -moz-box-shadow:    inset -7px -7px 12px 0px rgba(78, 205, 196, 0.75)
+            box-shadow:         inset -7px -7px 12px 0px rgba(78, 205, 196, 0.75)
+
+        span
+            top: 32%
+            left: 42%
+            position: absolute
+            font-size: 2.5em
+
+    .dice:first-child
+        margin-left: 6px
+
+#score-board
+    position: relative
+
+    .row
+        margin-bottom: 8px
+
+    .notch
+        &.sm-active
+            background-color: #FFB341
+        &.z-active
+            background-color: #AADBEE
+        &.lg-active
+            background-color: #9DD174
+
+    .notch-2, .notch-12
+        @include notchSize(2)
+    .notch-3, .notch-11
+        @include notchSize(3)
+    .notch-4, .notch-10
+        @include notchSize(4)
+    .notch-5, .notch-9
+        @include notchSize(5)
+    .notch-6, .notch-8
+        @include notchSize(6)
+    .notch-7, .notch-single
+        @include notchSize(7)
+    .notch-0
+        @include notchSize(0)
+
+    .slot
+        width: 7.5%
+        padding: 5px 0 0 0
+        font-size: 1.5em
+
+        div
+            height: 32px
+            width: 40px
+            text-align: center
+            color: #000
+
+            -webkit-border-radius: 20px 100px 100px 20px
+            -moz-border-radius:    20px 100px 100px 20px
+            border-radius:         20px 100px 100px 20px
+
+            -webkit-box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.75)
+            -moz-box-shadow:    0px 2px 5px 0px rgba(50, 50, 50, 0.75)
+            box-shadow:         0px 2px 5px 0px rgba(50, 50, 50, 0.75)
+
+            background: rgb(255,137,137)
+            background: -moz-linear-gradient(top, rgba(255,137,137,1) 0%, rgba(239,112,83,1) 40%, rgba(219,63,6,1) 100%)
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,137,137,1)), color-stop(40%,rgba(239,112,83,1)), color-stop(100%,rgba(219,63,6,1)))
+            background: -webkit-linear-gradient(top, rgba(255,137,137,1) 0%,rgba(239,112,83,1) 40%,rgba(219,63,6,1) 100%)
+            background: -o-linear-gradient(top, rgba(255,137,137,1) 0%,rgba(239,112,83,1) 40%,rgba(219,63,6,1) 100%)
+            background: -ms-linear-gradient(top, rgba(255,137,137,1) 0%,rgba(239,112,83,1) 40%,rgba(219,63,6,1) 100%)
+            background: linear-gradient(to bottom, rgba(255,137,137,1) 0%,rgba(239,112,83,1) 40%,rgba(219,63,6,1) 100%)
+
+    #play-panel
+        position: absolute
+
+        .content
+            position: relative
+            height: 292px
+            width:  213px
+            top:  152px
+            left: 522px
+            z-index: 99
+            // background-color: #d9edf7
+            // border: 1px dotted
+
+            .pair1
+                color: #DA825F
+            .pair2
+                color: #4ECDC4
+
+            button
+                height: 160px
+                width:  170px
+                margin-top:  65px
+                margin-left: 35px
+                font-weight: bold
+                font-size: 3em
+                background: rgb(255,79,79)
+                background: -moz-radial-gradient(center, ellipse cover, rgba(255,79,79,1) 0%, rgba(219,63,6,1) 100%)
+                background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,79,79,1)), color-stop(100%,rgba(219,63,6,1)))
+                background: -webkit-radial-gradient(center, ellipse cover, rgba(255,79,79,1) 0%,rgba(219,63,6,1) 100%)
+                background: -o-radial-gradient(center, ellipse cover, rgba(255,79,79,1) 0%,rgba(219,63,6,1) 100%)
+                background: -ms-radial-gradient(center, ellipse cover, rgba(255,79,79,1) 0%,rgba(219,63,6,1) 100%)
+                background: radial-gradient(ellipse at center, rgba(255,79,79,1) 0%,rgba(219,63,6,1) 100%)
+                -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75)
+                -moz-box-shadow:    2px 2px 5px 0px rgba(50, 50, 50, 0.75)
+                box-shadow:         2px 2px 5px 0px rgba(50, 50, 50, 0.75)

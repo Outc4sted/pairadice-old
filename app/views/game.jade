@@ -1,0 +1,42 @@
+#pairadice
+    #overview.row
+        .col-xs-3
+            .round
+                div(ng-show="rounds")
+                    span: strong {{ rounds | ordinal }}
+                    | &nbsp;round
+                div(ng-hide="rounds") New Game
+        .col-xs-2.col-xs-offset-1
+            .pairs.pair1(ng-bind="pairTotals.p1")
+        .col-xs-2
+            .pairs.pair2(ng-bind="pairTotals.p2")
+        .col-xs-3.col-xs-offset-1
+            .points
+                span: strong {{ score }}
+                | &nbsp;points
+
+    #death-board.row
+        .panel.panel-default
+            .panel-body(ng-repeat="dice in deathBoard")
+                deathrow(dice="dice")
+
+    #game-dice.row
+        .col-xs-12
+            ul.list-inline
+                li.dice(ng-repeat="dice in gameDice", ng-click="pairDice(dice)" ng-class="{'pair1': dice.pair == 'p1' && gameStarted, 'pair2': dice.pair == 'p2' && gameStarted}")
+                    span(ng-bind="dice.num")
+
+    #score-board.row
+        #play-panel
+            .content
+                button.btn.btn-primary.btn-lg(ng-hide="gameStarted", ng-click="startGame()") Start!
+                button.btn.btn-primary.btn-lg(ng-show="gameStarted", ng-disabled="!roundFinished" ng-click="finalizeRound()")
+                    div Finish
+                    div Round
+
+        div(ng-repeat="dice in scoreBoard")
+            .col-xs-1.slot
+                div(ng-bind="dice.num")
+            ul.list-inline
+                li(ng-repeat="notch in dice.notches track by trackNotch(dice.num, $index)")
+                    .notch(ng-class="notchSize(dice.num, $index, notch)")
