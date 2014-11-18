@@ -17,11 +17,24 @@ angular.module('pairadiceApp')
         $scope.score  = 0
         $scope.gameStarted   = false
         $scope.roundFinished = false
+        $scope.gameFinished  = false
         $scope.pairTotals    = { p1: 0, p2: 0 }
 
         $scope.startGame = ->
-            $scope.gameStarted = true
+            $scope.gameFinished = false
+            $scope.score  = 0
+            $scope.rounds = 0
+
+            for deathCard in $scope.deathBoard
+                deathCard.num = null
+                deathCard.notches = [false,false,false,false,
+                                     false,false,false,false]
+            for scoreCard in $scope.scoreBoard
+                scoreCard.notches = [false,false,false,false,false,
+                                     false,false,false,false,false]
+
             $scope.initRound()
+            $scope.gameStarted = true
 
         $scope.pairDice = (dice) ->
             return unless $scope.gameStarted
@@ -81,8 +94,8 @@ angular.module('pairadiceApp')
             return false
 
         $scope.initRound = ->
-            $scope.roundFinished = false
             $scope.rounds++
+            $scope.roundFinished = false
             $scope.pairTotals.p1 = 0
             $scope.pairTotals.p2 = 0
             dice.pair = null for dice in $scope.gameDice
@@ -91,10 +104,21 @@ angular.module('pairadiceApp')
         $scope.finalizeRound = ->
             return unless $scope.roundFinished
 
-            $scope.updateScoreBoard()
-            gameover = $scope.updateDeathBoard()
+            deathDice     = _.findWhere $scope.gameDice, { pair: null }
+            deathCards    = _.pluck $scope.deathBoard, 'num'
+            gameDiceRolls = _.pluck $scope.gameDice,   'num'
 
-            if gameover
+            rule1 = _.contains(deathCards, deathDice.num)
+            rule2 = (_.intersection deathCards, gameDiceRolls).length is 0
+            deathDiceDiscardRule = rule1 or rule2
+
+            if !deathDiceDiscardRule
+                return
+
+            $scope.updateScoreBoard()
+            $scope.gameFinished = $scope.updateDeathBoard()
+
+            if $scope.gameFinished
                 console.log 'Game over'
                 # submitHighScores()
             else $scope.initRound()

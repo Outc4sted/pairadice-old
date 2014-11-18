@@ -30,7 +30,10 @@
         #play-panel
             .content
                 button.btn.btn-primary.btn-lg(ng-hide="gameStarted", ng-click="startGame()") Start!
-                button.btn.btn-primary.btn-lg(ng-show="gameStarted", ng-disabled="!roundFinished" ng-click="finalizeRound()")
+                button.btn.btn-primary.btn-lg(ng-show="gameFinished", ng-click="startGame()")
+                    div New
+                    div Game
+                button.btn.btn-primary.btn-lg(ng-show="gameStarted && !gameFinished", ng-disabled="!roundFinished" ng-click="finalizeRound()")
                     div Finish
                     div Round
 

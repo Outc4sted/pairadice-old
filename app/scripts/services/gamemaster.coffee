@@ -36,7 +36,7 @@ angular.module('pairadiceApp')
         createScoreBoard = ->
             scoreRow =
                 num: null
-                points:null
+                points: null
                 notches: [false,false,false,false,false,
                           false,false,false,false,false]
 
