@@ -50,11 +50,14 @@ angular.module('pairadiceApp')
                 if not pairs.p1 or pairs.p1 < 2
                     dice.pair = 'p1'
                     $scope.pairTotals.p1 += dice.num
+                    pairs.p1++
+
                 else if not pairs.p2 or pairs.p2 < 2
                     dice.pair = 'p2'
                     $scope.pairTotals.p2 += dice.num
+                    pairs.p2++
 
-                $scope.roundFinished = pairs.p1 + pairs.p2 is 3
+                $scope.roundFinished = pairs.p1 + pairs.p2 is 4
 
         $scope.updateScoreBoard = ->
             for scoreCard in $scope.scoreBoard when scoreCard.num is $scope.pairTotals.p1 or scoreCard.num is $scope.pairTotals.p2
@@ -76,6 +79,17 @@ angular.module('pairadiceApp')
                     score += (notchCount - 5) * scoreCard.points
 
             $scope.score = score
+
+            # $scope.score = _.reduce $scope.scoreBoard, ((score, scoreCard) ->
+            #     notchCount = _.indexOf scoreCard.notches, false
+
+            #     if notchCount is -1
+            #         score += 5 * scoreCard.points
+            #     if notchCount > 0 and notchCount < 5
+            #         score -= 200
+            #     else if notchCount > 5
+            #         score += (notchCount - 5) * scoreCard.points
+            # ), 0
 
         $scope.updateDeathBoard = ->
             deathDice = _.findWhere $scope.gameDice,   { pair: null }

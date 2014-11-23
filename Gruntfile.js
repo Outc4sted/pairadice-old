@@ -333,17 +333,21 @@ module.exports = function (grunt) {
       dist: {
         options: {
           collapseWhitespace: true,
+          removeComments: true,
           conservativeCollapse: true,
           collapseBooleanAttributes: true,
           removeCommentsFromCDATA: true,
           removeOptionalTags: true
         },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
-          dest: '<%= yeoman.dist %>'
-        }]
+        files: {
+            'dist/index.html':           '<%= yeoman.app %>/index.html',
+            'dist/views/game.html':      '.tmp/views/game.html',
+            'dist/views/highscore.html': '.tmp/views/highscore.html',
+            'dist/views/login.html':     '.tmp/views/login.html',
+            'dist/views/main.html':      '.tmp/views/main.html',
+            'dist/views/settings.html':  '.tmp/views/settings.html',
+            'dist/views/templates/deathrow.html': '.tmp/views/templates/deathrow.html'
+        }
       }
     },
 
