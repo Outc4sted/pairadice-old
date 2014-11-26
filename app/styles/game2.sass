@@ -1,0 +1,32 @@
+@import "common"
+
+#game2
+    .list-group-item
+        cursor: pointer
+
+    .progress
+        margin-bottom: 0
+
+#dice-hand, #player-hand
+    @extend .game-dice
+    .dice
+        margin-left: 15px
+    .panel-body
+        padding: 8px
+        padding-bottom: 0
+
+#dice-hand
+    ul
+        text-align: center
+
+#players
+    table
+        margin-bottom: 0
+    .panel-body
+        padding-bottom: 0
+
+#player-hand
+
+    .blank-dice
+        border: 4px dotted rgba(0, 0, 0, 0.3)
+        cursor: auto

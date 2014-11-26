@@ -1,0 +1,63 @@
+#game2
+    .row(ng-hide="gameStarted")
+        .col-xs-6.col-xs-offset-3.text-center
+            h3 How many players?
+            .list-group
+                a.list-group-item(ng-click="playerCount = 2", ng-class="{'active': playerCount == 2}") 2 Players
+                a.list-group-item(ng-click="playerCount = 3", ng-class="{'active': playerCount == 3}") 3 Players
+                a.list-group-item(ng-click="playerCount = 4", ng-class="{'active': playerCount == 4}") 4 Players
+                a.list-group-item: .btn.btn-success.btn-lg.btn-block(ng-click="startGame()") <strong>Start</strong>
+
+    #players.row(ng-show="gameStarted")
+        .panel.panel-default: .panel-body
+            table.table
+                thead: tr
+                    th Players
+                    th Score
+                tbody
+                    tr(ng-repeat="player in players")
+                        td.col-md-3: span(ng-bind="player.name")
+                        td.col-md-9: .progress
+                            .progress-bar.progress-bar-striped(ng-style="{'width': scoreProgress(player)}") {{ player.score }} / 10000
+                            .progress-bar.progress-bar-success(ng-if="activePlayer.name == player.name", ng-style="{'width': scoreProgress(player,true)}") +{{ score }}
+
+    #dice-hand.row
+        .col-xs-12
+            .panel.panel-default
+                .panel-heading
+                    .row
+                        .col-xs-3
+                            h4 Round {{rounds}}
+                        .col-xs-6.text-center
+                            h4: span.label.label-info(ng-show="true") You need at least 1500pts to bank your score
+                        .col-xs-3.text-right
+                            h4 {{activePlayer.score}} points
+
+                .panel-body
+                    ul.list-inline
+                        li.dice(ng-repeat="dice in gameDice", ng-click="toggleDice(dice)" ng-class="{'selected': dice.selected && gameStarted}" ng-hide="dice.inHand")
+                            span(ng-bind="dice.num")
+
+    #player-hand.row
+        .col-xs-12
+            .panel.panel-default
+                .panel-heading
+                    .row
+                        .col-xs-6: h4 Your Hand
+                        .col-xs-6.text-right
+                            h4 {{'diddly'}} points
+
+                .panel-body
+                    ul.list-inline
+                        li.dice(ng-repeat="dice in gameDice | orderBy:'inHand':true", ng-click="toggleDice(dice, !dice.inHand)", ng-class="{'blank-dice': !dice.inHand}")
+                            span(ng-bind="dice.inHand ? dice.num : ''")
+
+    #match-overview.row
+        button.btn.btn-primary.btn-lg.btn-block(ng-hide="gameStarted", ng-click="initRound()")
+            div Start Game
+        button.btn.btn-primary.btn-lg.btn-block(ng-show="gameStarted", ng-disabled="rollPermission()", ng-click="roll()")
+            div Roll
+        button.btn.btn-primary.btn-lg.btn-block(ng-show="false", ng-click="finalizeHand()")
+            div New Hand
+        button.btn.btn-primary.btn-lg.btn-success.btn-block(ng-show="false", ng-click="bankScore()")
+            div Bank {{activePlayer.score}} pts

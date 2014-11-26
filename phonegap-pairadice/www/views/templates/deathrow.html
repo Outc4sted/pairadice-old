@@ -1,0 +1,1 @@
+<div class="row death-row"> <div class="dice col-xs-1"><span ng-if="dice.num" ng-bind="dice.num"></span> <div ng-if="!dice.num" class="glyphicon glyphicon-remove"></div> </div> <div class="col-xs-11"> <ul class="list-inline"> <li ng-repeat="notch in dice.notches track by $index"> <div ng-class="notch ? 'bg-danger' : 'bg-warning'" class="notch"></div> </li> </ul> </div> </div>

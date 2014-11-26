@@ -1,0 +1,33 @@
+.game-dice
+    .col-xs-12
+        padding: 0
+
+    .dice
+        height: 130px
+        width:  130px
+        margin-left: 19px
+        position: relative
+        cursor: pointer
+        -webkit-border-radius: 10px 10px 10px 10px
+        -moz-border-radius:    10px 10px 10px 10px
+        border-radius:         10px 10px 10px 10px
+        border: 4px solid #000
+
+        &.pair1
+            -webkit-box-shadow: inset -7px -7px 12px 0px rgba(218, 130, 95, 0.75) // #DA825F
+            -moz-box-shadow:    inset -7px -7px 12px 0px rgba(218, 130, 95, 0.75)
+            box-shadow:         inset -7px -7px 12px 0px rgba(218, 130, 95, 0.75)
+
+        &.pair2
+            -webkit-box-shadow: inset -7px -7px 12px 0px rgba(78, 205, 196, 0.75) // #4ECDC4
+            -moz-box-shadow:    inset -7px -7px 12px 0px rgba(78, 205, 196, 0.75)
+            box-shadow:         inset -7px -7px 12px 0px rgba(78, 205, 196, 0.75)
+
+        span
+            top: 32%
+            left: 42%
+            position: absolute
+            font-size: 2.5em
+
+    .dice:first-child
+        margin-left: 6px

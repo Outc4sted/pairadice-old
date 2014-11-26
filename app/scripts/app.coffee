@@ -50,5 +50,10 @@ angular
                 resolve:
                     game: (GameMaster) -> return GameMaster.init()
 
+            .state 'game2',
+                url: "/play2"
+                templateUrl: 'views/game2.html'
+                controller: 'Game2Ctrl'
+
         $urlRouterProvider.otherwise('')
     )

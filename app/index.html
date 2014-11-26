@@ -12,7 +12,9 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/game.css">
+    <link rel="stylesheet" href="styles/game2.css">
     <link rel="stylesheet" href="styles/login.css">
     <link rel="stylesheet" href="styles/lib/ladda.min.css">
     <!-- endbuild -->
@@ -35,6 +37,7 @@
                     <div>
                         <ul class="nav navbar-nav">
                             <li ui-sref-active="active"><a ui-sref="game">Game</a></li>
+                            <li ui-sref-active="active"><a ui-sref="game2">Game2</a></li>
                             <li ui-sref-active="active"><a ui-sref="highscores">Highscores</a></li>
                             <li ui-sref-active="active"><a ui-sref="login">Login</a></li>
                             <li ui-sref-active="active"><a ui-sref="settings">Settings</a></li>
@@ -103,6 +106,10 @@
     <script src="scripts/lib/ladda.min.js"></script>
     <script src="scripts/lib/spin.min.js"></script>
     <script src="scripts/filters/ordinal.js"></script>
+    <script src="scripts/controllers/rainforest.js"></script>
+    <script src="scripts/services/game2master.js"></script>
+    <script src="scripts/controllers/game2.js"></script>
+    <script src="scripts/controllers/tutorial.js"></script>
     <!-- endbuild -->
 </body>
 </html>
