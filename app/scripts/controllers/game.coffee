@@ -122,9 +122,11 @@ angular.module('pairadiceApp')
             deathCards    = _.pluck $scope.deathBoard, 'num'
             gameDiceRolls = _.pluck $scope.gameDice,   'num'
 
-            rule1 = _.contains(deathCards, deathDice.num)
-            rule2 = (_.intersection deathCards, gameDiceRolls).length is 0
-            deathDiceDiscardRule = rule1 or rule2
+            rule1 = (_.compact deathCards).length isnt 3
+            rule2 = _.contains(deathCards, deathDice.num)
+            rule3 = (_.intersection deathCards, gameDiceRolls).length is 0
+
+            deathDiceDiscardRule = rule1 or rule2 or rule3
 
             if !deathDiceDiscardRule
                 return

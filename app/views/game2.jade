@@ -29,9 +29,9 @@
                         .col-xs-3
                             h4 Round {{rounds}}
                         .col-xs-6.text-center
-                            h4: span.label.label-info(ng-show="true") You need at least 1500pts to bank your score
+                            h4: span.label.label-info(ng-show="gameStarted") You need at least 1500pts to bank your score
                         .col-xs-3.text-right
-                            h4 {{activePlayer.score}} points
+                            h4 {{activePlayer.score || 0}} points
 
                 .panel-body
                     ul.list-inline

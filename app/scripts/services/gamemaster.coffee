@@ -43,7 +43,7 @@ angular.module('pairadiceApp')
             for i in [2..12]
                 scoreRow.num = i
 
-                switch scoreRow.num                          # probabilities
+                switch scoreRow.num                           # probabilities
                     when 2, 12 then scoreRow.points = 1000    #         2.78%
                     when 3, 11 then scoreRow.points = 500     #         5.56%
                     when 4, 10 then scoreRow.points = 350     #         8.33%

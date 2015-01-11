@@ -40,7 +40,7 @@ angular.module('pairadiceApp')
 
         $scope.startGame = ->
             $scope.gameFinished = false
-            $scope.score  = 1000
+            $scope.score  = 0
             $scope.rounds = 0
 
             $scope.players = Game2Master.createPlayers $scope.playerCount
