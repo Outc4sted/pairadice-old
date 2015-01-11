@@ -36,6 +36,40 @@ angular.module('pairadiceApp')
             $scope.initRound()
             $scope.gameStarted = true
 
+        $scope.initRound = ->
+            $scope.rounds++
+            $scope.roundFinished = false
+            $scope.pairTotals.p1 = 0
+            $scope.pairTotals.p2 = 0
+
+            for dice in $scope.gameDice
+                dice.pair = null
+                dice.num  = _.random(1, 6)
+
+        $scope.finalizeRound = ->
+            return unless $scope.roundFinished
+
+            deathDie      = _.findWhere $scope.gameDice, { pair: null }
+            deathCards    = _.pluck $scope.deathBoard, 'num'
+            gameDiceRolls = _.pluck $scope.gameDice,   'num'
+
+            # Unless all 3 deathCard rows have been assigned, there's no limitation. If all rows exist, check if the deathDie matches any.
+            # If it's not matched, it's still valid if none of the dice rolled this round can be matched either.
+            rule1 = (_.compact deathCards).length isnt 3
+            rule2 = _.contains(deathCards, deathDie.num)
+            rule3 = (_.intersection deathCards, gameDiceRolls).length is 0
+
+            discardRulesFollowed = rule1 or rule2 or rule3
+            return unless discardRulesFollowed
+
+            $scope.updateScoreBoard()
+            $scope.gameFinished = $scope.updateDeathBoard()
+
+            if $scope.gameFinished
+                console.log 'Game over'
+                # submitHighScores()
+            else $scope.initRound()
+
         $scope.pairDice = (dice) ->
             return unless $scope.gameStarted
 
@@ -67,34 +101,20 @@ angular.module('pairadiceApp')
                 if $scope.pairTotals.p1 is $scope.pairTotals.p2
                     scoreCard.notches[++notchCount] = true
 
-            score = 0
-            for scoreCard in $scope.scoreBoard
+            $scope.score = _.reduce $scope.scoreBoard, ((score, scoreCard) ->
                 notchCount = _.indexOf scoreCard.notches, false
 
-                if notchCount is -1
-                    score += 5 * scoreCard.points
-                if notchCount > 0 and notchCount < 5
-                    score -= 200
-                else if notchCount > 5
-                    score += (notchCount - 5) * scoreCard.points
-
-            $scope.score = score
-
-            # $scope.score = _.reduce $scope.scoreBoard, ((score, scoreCard) ->
-            #     notchCount = _.indexOf scoreCard.notches, false
-
-            #     if notchCount is -1
-            #         score += 5 * scoreCard.points
-            #     if notchCount > 0 and notchCount < 5
-            #         score -= 200
-            #     else if notchCount > 5
-            #         score += (notchCount - 5) * scoreCard.points
-            # ), 0
+                return switch
+                    when notchCount is -1 then score += 5 * scoreCard.points
+                    when notchCount > 0 and notchCount < 5 then score -= 200
+                    when notchCount > 5 then score += (notchCount - 5) * scoreCard.points
+                    else score
+            ), 0
 
         $scope.updateDeathBoard = ->
-            deathDice = _.findWhere $scope.gameDice,   { pair: null }
+            deathDie  = _.findWhere $scope.gameDice,   { pair: null }
             emptySlot = _.findWhere $scope.deathBoard, { num:  null }
-            deathCard = _.findWhere $scope.deathBoard, { num:  deathDice.num }
+            deathCard = _.findWhere $scope.deathBoard, { num:  deathDie.num }
 
             if deathCard
                 notchCount = _.indexOf deathCard.notches, false
@@ -102,61 +122,7 @@ angular.module('pairadiceApp')
                 return notchCount is 7
 
             else if emptySlot
-                emptySlot.num = deathDice.num
+                emptySlot.num = deathDie.num
                 emptySlot.notches[0] = true
 
             return false
-
-        $scope.initRound = ->
-            $scope.rounds++
-            $scope.roundFinished = false
-            $scope.pairTotals.p1 = 0
-            $scope.pairTotals.p2 = 0
-            dice.pair = null for dice in $scope.gameDice
-            (dice.num = _.random(1, 6)) for dice in $scope.gameDice
-
-        $scope.finalizeRound = ->
-            return unless $scope.roundFinished
-
-            deathDice     = _.findWhere $scope.gameDice, { pair: null }
-            deathCards    = _.pluck $scope.deathBoard, 'num'
-            gameDiceRolls = _.pluck $scope.gameDice,   'num'
-
-            rule1 = (_.compact deathCards).length isnt 3
-            rule2 = _.contains(deathCards, deathDice.num)
-            rule3 = (_.intersection deathCards, gameDiceRolls).length is 0
-
-            deathDiceDiscardRule = rule1 or rule2 or rule3
-
-            if !deathDiceDiscardRule
-                return
-
-            $scope.updateScoreBoard()
-            $scope.gameFinished = $scope.updateDeathBoard()
-
-            if $scope.gameFinished
-                console.log 'Game over'
-                # submitHighScores()
-            else $scope.initRound()
-
-        $scope.notchSize = (num, index, notch) ->
-            return unless num or index
-
-            if index < 4
-                notchClass = 'notch-single'
-                if notch
-                    notchClass += ' sm-active'
-
-            else if index is 4
-                notchClass = 'notch-0'
-                if notch
-                    notchClass += ' z-active'
-
-            else
-                notchClass = 'notch-' + num
-                if notch
-                    notchClass += ' lg-active'
-
-            return notchClass
-
-        $scope.trackNotch = (num, index) -> return "#{num}#{index}"

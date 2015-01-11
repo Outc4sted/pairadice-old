@@ -41,5 +41,5 @@
             .col-xs-1.slot
                 div(ng-bind="dice.num")
             ul.list-inline
-                li(ng-repeat="notch in dice.notches track by trackNotch(dice.num, $index)")
-                    .notch(ng-class="notchSize(dice.num, $index, notch)")
+                li(ng-repeat="notch in dice.notches track by #{dice.num + $index}")
+                    .notch(ng-class="dice.num | notchSize:$index:notch")
