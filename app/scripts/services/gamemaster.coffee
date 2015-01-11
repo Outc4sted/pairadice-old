@@ -9,9 +9,16 @@
 ###
 angular.module('pairadiceApp')
     .service 'GameMaster', ($q) ->
-        gameDice   = []
-        deathBoard = []
-        scoreBoard = []
+        state =
+            rounds: 0
+            score:  0
+            gameStarted:   false
+            gameFinished:  false
+            roundFinished: false
+            gameDice:   []
+            deathBoard: []
+            scoreBoard: []
+            pairTotals: { p1: 0, p2: 0 }
 
         createGameDice = ->
             dice =
@@ -20,9 +27,7 @@ angular.module('pairadiceApp')
 
             for i in [1..5]
                 dice.num = i
-                gameDice.push( _.clone(dice) )
-
-            return gameDice
+                state.gameDice.push( _.clone(dice) )
 
         createDeathBoard = ->
             deathRow =
@@ -30,8 +35,7 @@ angular.module('pairadiceApp')
                 notches: [false,false,false,false,
                           false,false,false,false]
 
-            deathBoard.push( $.extend(true, {}, deathRow) ) for i in [1..3]
-            return deathBoard
+            state.deathBoard.push( $.extend(true, {}, deathRow) ) for i in [1..3]
 
         createScoreBoard = ->
             scoreRow =
@@ -51,21 +55,10 @@ angular.module('pairadiceApp')
                     when 6, 8  then scoreRow.points = 200     #        13.89%
                     else scoreRow.points = 150                #        16.67%
 
-                scoreBoard.push( $.extend(true, {}, scoreRow) )
+                state.scoreBoard.push( $.extend(true, {}, scoreRow) )
 
-            return scoreBoard
+        createGameDice()
+        createDeathBoard()
+        createScoreBoard()
 
-        init = ->
-            createGameDice()
-            createDeathBoard()
-            createScoreBoard()
-
-            return {
-                gameDice:   gameDice
-                deathBoard: deathBoard
-                scoreBoard: scoreBoard
-            }
-
-        return {
-            init: init
-        }
+        return state

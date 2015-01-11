@@ -47,7 +47,6 @@ angular
                 url: "/play"
                 templateUrl: 'views/game.html'
                 controller: 'GameCtrl'
-                resolve: game: (GameMaster) -> return GameMaster.init()
 
             .state 'game2',
                 url: "/play2"
