@@ -1,4 +1,4 @@
 Pairadice
 =========
 
-http://imgur.com/aVdtW4O
+![alt tag](http://i.imgur.com/aVdtW4O.png)
